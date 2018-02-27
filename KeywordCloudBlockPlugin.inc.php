@@ -1,0 +1,132 @@
+<?php
+
+/**
+ * @file plugins/blocks/KeywordCloud/KeywordCloudBlockPlugin.inc.php
+ *
+ * Copyright (c) 2014-2018 Simon Fraser University
+ * Copyright (c) 2003-2018 John Willinsky
+ * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+ *
+ * @class KeywordCloudBlockPlugin
+ * @ingroup plugins_blocks_KeywordCloud
+ *
+ * @brief Class for KeywordCloud block plugin
+ */
+
+import('lib.pkp.classes.plugins.BlockPlugin');
+
+define('KEYWORD_BLOCK_MAX_ITEMS', 100);
+define('KEYWORD_BLOCK_CACHE_DAYS', 2);
+
+class KeywordCloudBlockPlugin extends BlockPlugin {
+	/**
+	 * Install default settings on journal creation.
+	 * @return string
+	 */
+	function getContextSpecificPluginSettingsFile() {
+		return $this->getPluginPath() . '/settings.xml';
+	}
+
+	/**
+	 * Get the display name of this plugin.
+	 * @return String
+	 */
+	function getDisplayName() {
+		return __('plugins.block.keywordCloud.displayName');
+	}
+
+	/**
+	 * Get a description of the plugin.
+	 */
+	function getDescription() {
+		return __('plugins.block.keywordCloud.description');
+	}
+
+	function _cacheMiss($cache, $id) {
+
+		//Get all published Articles of this Journal
+		$publishedArticleDao = DAORegistry::getDAO('PublishedArticleDAO');
+        $publishedArticles =& $publishedArticleDao->getPublishedArticlesByJournalId($cache->getCacheId(), $rangeInfo = null, $reverse = true);
+
+		//Get all IDs of the published Articles
+        $submissionKeywordDao = DAORegistry::getDAO('SubmissionKeywordDAO');
+        //Get all Keywords from all published articles of this journal
+        $all_keywords = array();
+		while ($publishedArticle = $publishedArticles->next()) {
+            $article_keywords = $submissionKeywordDao->getKeywords($publishedArticle->getId(),
+				array(AppLocale::getLocale()))[AppLocale::getLocale()];
+			$all_keywords = array_merge($all_keywords, $article_keywords);
+		}
+
+		//Count the keywords					
+		$count_keywords = array_count_values($all_keywords);
+
+		//Sort the keywords frequency-based
+		arsort($count_keywords, SORT_NUMERIC);
+
+		// Put only the most often used keywords in an array
+		// maximum of KEYWORD_BLOCK_MAX_ITEMS
+		$top_keywords = array_slice($count_keywords, 0, KEYWORD_BLOCK_MAX_ITEMS);
+		
+		$keywords = "[";
+
+		foreach ($top_keywords as $k => $c) {
+			$keywords .= "{text: '$k', size: $c},"; 
+		}
+
+		$keywords .= "]";
+		
+		$cache->setEntireCache($keywords);
+
+		return null;
+	}
+
+	/**
+	 * @see BlockPlugin::getContents
+	 */
+	function getContents($templateMgr, $request = null) {
+
+		$journal = $request->getJournal();
+		if (!$journal) return '';
+
+		$locale = AppLocale::getLocale();
+
+		$cacheManager = CacheManager::getManager();
+		$cache = $cacheManager->getFileCache(
+			'keywords_'. $locale, $journal->getId(),
+			array($this, '_cacheMiss')
+		);
+
+		$cacheTime = $cache->getCacheTime();
+		if (time() - $cache->getCacheTime() > 60 * 60 * 24 * KEYWORD_BLOCK_CACHE_DAYS)
+			$cache->flush();
+
+		$keywords =& $cache->getContents();
+		if (empty($keywords)) return '';
+
+
+		$dispatcher = $request->getDispatcher();
+		$sreachUrl = $dispatcher->url($request, ROUTE_PAGE,	null, 'search');
+
+		
+		$templateMgr->addJavaScript('d3',$this->getJavaScriptURL($request).'d3.min.js');
+		$templateMgr->addJavaScript('d3.layout.cloud',$this->getJavaScriptURL($request).'d3.layout.cloud.min.js');
+		$templateMgr->addJavaScript('d3.wordcloud',$this->getJavaScriptURL($request).'d3.wordcloud.js');
+
+
+		$templateMgr->assign(array(
+			'keywords' => $keywords ,
+			'url' => $sreachUrl)
+		);
+
+
+		return parent::getContents($templateMgr, $request);
+	}
+
+
+	function getJavaScriptURL($request) {
+		return $request->getBaseUrl() . '/' . $this->getPluginPath() . '/js/';
+	}
+}
+
+?>
