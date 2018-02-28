@@ -12,7 +12,6 @@ COPYING for the complete terms of this license.
 
 ## Install
  * Copy the release source or unpack the release package into the OJS i.e. OMP plugins/blocks/KeywordCloud/ folder.
- * Run `php tools/upgrade.php upgrade` from the OJS i.e. OMP folder to update shemas.
  * Go to Settings -> Website -> Plugins -> Block Plugins -> KeywordCloud Plugin and enable the plugin.
 
 ## Compatibility
