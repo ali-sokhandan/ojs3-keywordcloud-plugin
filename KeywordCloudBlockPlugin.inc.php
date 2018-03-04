@@ -103,22 +103,13 @@ class KeywordCloudBlockPlugin extends BlockPlugin {
 
 		$keywords =& $cache->getContents();
 		if (empty($keywords)) return '';
-
-
-		$dispatcher = $request->getDispatcher();
-		$sreachUrl = $dispatcher->url($request, ROUTE_PAGE,	null, 'search');
-
 		
-		$templateMgr->addJavaScript('d3',$this->getJavaScriptURL($request).'d3.min.js');
+		$templateMgr->addJavaScript('d3','https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js');
 		$templateMgr->addJavaScript('d3.layout.cloud',$this->getJavaScriptURL($request).'d3.layout.cloud.min.js');
-		$templateMgr->addJavaScript('d3.wordcloud',$this->getJavaScriptURL($request).'d3.wordcloud.js');
+		$templateMgr->addJavaScript('d3.wordcloud',$this->getJavaScriptURL($request).'d3.wordcloud.min.js');
 
 
-		$templateMgr->assign(array(
-			'keywords' => $keywords ,
-			'url' => $sreachUrl)
-		);
-
+		$templateMgr->assign('keywords',$keywords);
 
 		return parent::getContents($templateMgr, $request);
 	}
