@@ -11,7 +11,7 @@ This plugin is licensed under the GNU General Public License v2. See the file
 COPYING for the complete terms of this license.
 
 ## Install
- * Copy the release source or unpack the release package into the OJS i.e. OMP plugins/blocks/KeywordCloud/ folder.
+ * Copy the release source or unpack the release package into the OJS i.e. OMP plugins/blocks/keywordCloud/ folder.
  * Go to Settings -> Website -> Plugins -> Block Plugins -> KeywordCloud Plugin and enable the plugin.
  * Go to Settings -> Website -> Appearance -> Sidebar management -> and drag the "Keyword Cloud Plugin" to the sidebar section.
 
