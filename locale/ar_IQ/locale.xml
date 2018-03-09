@@ -2,14 +2,14 @@
 <!DOCTYPE locale SYSTEM "../../../../../lib/pkp/dtd/locale.dtd">
 
 <!--
-  * plugins/blocks/keywordCloud/locale/ar_IQ/locale.xml
-  *
-  * Copyright (c) 2013-2018 Simon Fraser University
-  * Copyright (c) 2003-2018 John Willinsky
-  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
-  *
-  * Localization strings.
-  -->
+	* plugins/blocks/keywordCloud/locale/ar_IQ/locale.xml
+	*
+	* Copyright (c) 2013-2018 Simon Fraser University
+	* Copyright (c) 2003-2018 John Willinsky
+	* Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+	*
+	* Localization strings.
+	-->
  
 <locale name="ar_IQ" full_name="العربية">
 	<message key="plugins.block.keywordCloud.displayName">كتلة سحابة الكلمات</message>

@@ -2,15 +2,15 @@
 <!DOCTYPE locale SYSTEM "../../../../../lib/pkp/dtd/locale.dtd">
 
 <!--
-  * plugins/blocks/keywordCloud/locale/no_NO/locale.xml
-  *
-  * Copyright (c) 2013-2018 Simon Fraser University
-  * Copyright (c) 2003-2018 John Willinsky
-  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
-  *
-  * Localization strings for the no_NO (Norsk) locale.
-  *
-  -->
+	* plugins/blocks/keywordCloud/locale/no_NO/locale.xml
+	*
+	* Copyright (c) 2013-2018 Simon Fraser University
+	* Copyright (c) 2003-2018 John Willinsky
+	* Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+	*
+	* Localization strings for the no_NO (Norsk) locale.
+	*
+	-->
  
 <locale name="no_NO" full_name="Norsk">
 	<message key="plugins.block.keywordCloud.displayName">Ordskyblokk</message>

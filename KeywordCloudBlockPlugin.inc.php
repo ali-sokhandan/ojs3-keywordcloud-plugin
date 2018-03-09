@@ -8,15 +8,15 @@
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class KeywordCloudBlockPlugin
- * @ingroup plugins_blocks_KeywordCloud
+ * @ingroup plugins_blocks_Keywordcloud
  *
  * @brief Class for KeywordCloud block plugin
  */
 
-import('lib.pkp.classes.plugins.BlockPlugin');
-
 define('KEYWORD_BLOCK_MAX_ITEMS', 100);
 define('KEYWORD_BLOCK_CACHE_DAYS', 2);
+
+import('lib.pkp.classes.plugins.BlockPlugin');
 
 class KeywordCloudBlockPlugin extends BlockPlugin {
 	/**
@@ -42,53 +42,13 @@ class KeywordCloudBlockPlugin extends BlockPlugin {
 		return __('plugins.block.keywordCloud.description');
 	}
 
-	function _cacheMiss($cache, $id) {
-
-		//Get all published Articles of this Journal
-		$publishedArticleDao = DAORegistry::getDAO('PublishedArticleDAO');
-        $publishedArticles =& $publishedArticleDao->getPublishedArticlesByJournalId($cache->getCacheId(), $rangeInfo = null, $reverse = true);
-
-		//Get all IDs of the published Articles
-        $submissionKeywordDao = DAORegistry::getDAO('SubmissionKeywordDAO');
-        //Get all Keywords from all published articles of this journal
-        $all_keywords = array();
-		while ($publishedArticle = $publishedArticles->next()) {
-            $article_keywords = $submissionKeywordDao->getKeywords($publishedArticle->getId(),
-				array(AppLocale::getLocale()))[AppLocale::getLocale()];
-			$all_keywords = array_merge($all_keywords, $article_keywords);
-		}
-
-		//Count the keywords					
-		$count_keywords = array_count_values($all_keywords);
-
-		//Sort the keywords frequency-based
-		arsort($count_keywords, SORT_NUMERIC);
-
-		// Put only the most often used keywords in an array
-		// maximum of KEYWORD_BLOCK_MAX_ITEMS
-		$top_keywords = array_slice($count_keywords, 0, KEYWORD_BLOCK_MAX_ITEMS);
-		
-		$keywords = "[";
-
-		foreach ($top_keywords as $k => $c) {
-			$keywords .= "{text: '$k', size: $c},"; 
-		}
-
-		$keywords .= "]";
-		
-		$cache->setEntireCache($keywords);
-
-		return null;
-	}
-
 	/**
 	 * @see BlockPlugin::getContents
 	 */
 	function getContents($templateMgr, $request = null) {
-
 		$journal = $request->getJournal();
 		if (!$journal) return '';
-
+		
 		$locale = AppLocale::getLocale();
 
 		$cacheManager = CacheManager::getManager();
@@ -105,16 +65,54 @@ class KeywordCloudBlockPlugin extends BlockPlugin {
 		if (empty($keywords)) return '';
 		
 		$templateMgr->addJavaScript('d3','https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js');
-		$templateMgr->addJavaScript('d3.layout.cloud',$this->getJavaScriptURL($request).'d3.layout.cloud.min.js');
+		$templateMgr->addJavaScript('d3.layout.cloud','https://cdnjs.cloudflare.com/ajax/libs/d3-cloud/1.0.0/d3.layout.cloud.min.js');
 		$templateMgr->addJavaScript('d3.wordcloud',$this->getJavaScriptURL($request).'d3.wordcloud.min.js');
 
 
-		$templateMgr->assign('keywords',$keywords);
-
+		$templateMgr->assign('keywords', $keywords);
 		return parent::getContents($templateMgr, $request);
 	}
+	
+	function _cacheMiss($cache, $id) {
 
+		//Get all published Articles of this Journal
+		$publishedArticleDao = DAORegistry::getDAO('PublishedArticleDAO');
+		$publishedArticles =& $publishedArticleDao->getPublishedArticlesByJournalId($cache->getCacheId(), $rangeInfo = null, $reverse = true);
 
+		//Get all IDs of the published Articles
+		$submissionKeywordDao = DAORegistry::getDAO('SubmissionKeywordDAO');
+		//Get all Keywords from all published articles of this journal
+		$all_keywords = array();
+		while ($publishedArticle = $publishedArticles->next()) {
+			$article_keywords = $submissionKeywordDao->getKeywords($publishedArticle->getId(),
+				array(AppLocale::getLocale()))[AppLocale::getLocale()];
+			$all_keywords = array_merge($all_keywords, $article_keywords);
+		}
+
+		//Count the keywords					
+		$count_keywords = array_count_values($all_keywords);
+
+		//Sort the keywords frequency-based
+		arsort($count_keywords, SORT_NUMERIC);
+
+		// Put only the most often used keywords in an array
+		// maximum of KEYWORD_BLOCK_MAX_ITEMS
+		$top_keywords = array_slice($count_keywords, 0, KEYWORD_BLOCK_MAX_ITEMS);
+		
+		$keywords = array();
+
+		foreach ($top_keywords as $k => $c) {
+			$kw = new stdClass();
+			$kw->text = $k;
+			$kw->size = $c;
+			$keywords[] = $kw;
+		}
+		
+		$cache->setEntireCache(json_encode($keywords));
+
+		return null;
+	}
+	
 	function getJavaScriptURL($request) {
 		return $request->getBaseUrl() . '/' . $this->getPluginPath() . '/js/';
 	}

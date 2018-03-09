@@ -1,6 +1,6 @@
 <?php
 /**
- * @defgroup plugins_blocks_Keyword_cloud KeywordCloud  Block Plugin
+ * @defgroup plugins_blocks_Keywordcloud KeywordCloud Block Plugin
  */
  
 /**
@@ -10,7 +10,7 @@
  * Copyright (c) 2003-2018 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
- * @ingroup plugins_blocks_Keyword_cloud
+ * @ingroup plugins_blocks_Keywordcloud
  * @brief Wrapper for KeywordCloud block plugin.
  *
  */

@@ -5,7 +5,7 @@
  * Copyright (c) 2003-2018 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
- * Common site sidebar menu -- information links.
+ * Common site sidebar menu -- keywords cloud.
  *
  *}
 <div class="pkp_block block_Keywordcloud">
@@ -24,5 +24,5 @@
 			{rdelim})
 			.start();
 	{rdelim});
-    </script>
+	</script>
 </div>

@@ -2,15 +2,15 @@
 <!DOCTYPE locale SYSTEM "../../../../../lib/pkp/dtd/locale.dtd">
 
 <!--
-  * locale.xml
-  *
-  * Copyright (c) 2013-2018 Simon Fraser University
-  * Copyright (c) 2003-2018 John Willinsky
-  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
-  *
-  * Localization strings for the es_AR locale.
-  *
-  -->
+	* locale.xml
+	*
+	* Copyright (c) 2013-2018 Simon Fraser University
+	* Copyright (c) 2003-2018 John Willinsky
+	* Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+	*
+	* Localization strings for the es_AR locale.
+	*
+	-->
  
 <locale name="es_AR" full_name="Español (Argentina)">
 	<message key="plugins.block.keywordCloud.displayName">Bloque de Palabras Clave</message>

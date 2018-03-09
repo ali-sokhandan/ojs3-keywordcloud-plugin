@@ -2,15 +2,15 @@
 <!DOCTYPE locale SYSTEM "../../../../../lib/pkp/dtd/locale.dtd">
 
 <!--
-  * plugins/blocks/keywordCloud/locale/sr_SR/locale.xml
-  *
-  * Copyright (c) 2013-2018 Simon Fraser University
-  * Copyright (c) 2003-2018 John Willinsky
-  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
-  *
-  * Localization strings for the sr_SR (Cрпски) locale.
-  *
-  -->
+	* plugins/blocks/keywordCloud/locale/sr_SR/locale.xml
+	*
+	* Copyright (c) 2013-2018 Simon Fraser University
+	* Copyright (c) 2003-2018 John Willinsky
+	* Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+	*
+	* Localization strings for the sr_SR (Cрпски) locale.
+	*
+	-->
  
 <locale name="sr_SR" full_name="Cрпски">
 	<message key="plugins.block.keywordCloud.displayName">Oblak ključnih reči</message>

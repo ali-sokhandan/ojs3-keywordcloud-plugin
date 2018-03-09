@@ -13,6 +13,7 @@ COPYING for the complete terms of this license.
 ## Install
  * Copy the release source or unpack the release package into the OJS i.e. OMP plugins/blocks/KeywordCloud/ folder.
  * Go to Settings -> Website -> Plugins -> Block Plugins -> KeywordCloud Plugin and enable the plugin.
+ * Go to Settings -> Website -> Appearance -> Sidebar management -> and drag the "Keyword Cloud Plugin" to the sidebar section.
 
 ## Compatibility
 This plugin is compatible with OJS 3.1.x and OMP 1.2.x.

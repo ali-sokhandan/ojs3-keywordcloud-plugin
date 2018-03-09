@@ -2,13 +2,13 @@
 <!DOCTYPE locale SYSTEM "../../../../../lib/pkp/dtd/locale.dtd">
 
 <!--
-  * Copyright (c) 2013-2018 Simon Fraser University
-  * Copyright (c) 2003-2018 John Willinsky
-  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
-  *
-  * Plik językowy dla pl_PL
-  *
-  -->
+	* Copyright (c) 2013-2018 Simon Fraser University
+	* Copyright (c) 2003-2018 John Willinsky
+	* Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+	*
+	* Plik językowy dla pl_PL
+	*
+	-->
  
 <locale name="pl_PL" full_name="Język Polski">
 	<message key="plugins.block.keywordCloud.displayName">Chmura słów kluczowych</message>
