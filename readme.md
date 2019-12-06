@@ -17,3 +17,8 @@ COPYING for the complete terms of this license.
 
 ## Compatibility
 This plugin is compatible with OJS and OMP 3.1.2.x.
+
+## Credits
+Developed by Alireza Sokhandan at https://github.com/ali-sokhandan/ojs3-keywordcloud-plugin
+
+This fork is intended to maintain compatibility with the latest versions of OJS as the original project has no longer been updated.
